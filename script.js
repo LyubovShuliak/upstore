@@ -8,41 +8,13 @@ function showSearchBar() {
   document.querySelector(".text").classList.toggle("show");
 }
 
-function makeCardItem(book) {
-  const cardList = document.querySelector(".card-list");
-  if (cardList) {
-     card = ` 
-  <div class="row">
-    <div class="col s12 m6 ">
-      <div class="card">
-        <div class="card-image">
-          <img src="${book.image}">
-          <a class="btn-floating halfway-fab waves-effect waves-light red buy"><i class="material-icons">Buy</i></a>
-        </div>
-        <div class="card-content">
-          <p>${book.title}</p>
-          <p>&#8372;${book.price}.00</p>
-          <p>Доступно ${book.quantity} примірників</p>
-        </div>
-      </div>
-    </div>
-  </div>
-           
-  
-    `;
-  }
-
-  const prevContent = cardList.innerHTML;
-  cardList.innerHTML = prevContent + card;
-}
-
-const bookList = [
+let bookList = [
   {
     image: "./assets/images/Product images/ark.jpg",
     title: "Тріумфальна арка",
     author: "Еріх Марія Ремарк",
     price: 100,
-    quantity: 8,
+    quantity: 0,
     inCart: 0,
   },
   {
@@ -151,32 +123,53 @@ const bookList = [
     inCart: 0,
   },
 ];
-const book = bookList.sort((a, b) => a.price - b.price);
-console.log(book);
-book.map((book) => {
-  makeCardItem(book);
-});
-const cart = bookList[0];
-const button = document.getElementsByTagName("button");
-console.log(button[0]);
-console.log(cart);
-console.log(document.querySelector(".cart"));
 
-let carts = document.querySelectorAll(".buy");
+function displayCatalog() {
+  let books = document.querySelector(".card-list");
 
-for (let i = 0; i < carts.length; i++) {
-  carts[i].addEventListener("click", () => {
-    cartNumbers(bookList[i]);
-    totalCost(bookList[i]);
-  });
-}
-
-function onloadCartNumbers() {
-  let productNumbers = localStorage.getItem("cartNumbers");
-  if (productNumbers) {
-    document.querySelector(".cart span").textContent = productNumbers;
+  if (books) {
+    bookList.map((book) => {
+      makeCardItem(book);
+    });
+  }
+  let carts = document.querySelectorAll(".buy");
+  for (let i = 0; i < carts.length; i++) {
+    carts[i].addEventListener("click", () => {
+      cartNumbers(bookList[i]);
+      totalCost(bookList[i]);
+    });
   }
 }
+
+function makeCardItem(book) {
+  const cardList = document.querySelector(".card-list");
+  if (cardList) {
+    card = ` 
+  <div class="row">
+    <div class="col s12 m6 ">
+      <div class="card">
+        <div class="card-image">
+          <img src="${book.image}">
+          <a class="btn-floating halfway-fab waves-effect waves-light red buy"><i class="material-icons">Buy</i></a>
+        </div>
+        <div class="card-content">
+          <p>${book.title}</p>
+          <p>&#8372;${book.price}.00</p>
+          <p class = "quantity">Доступно ${book.quantity} примірників</p>
+        </div>
+      </div>
+    </div>
+  </div>
+           
+  
+    `;
+  }
+  console.log(book.quantity);
+
+  const prevContent = cardList.innerHTML;
+  cardList.innerHTML = prevContent + card;
+}
+
 function cartNumbers(product) {
   let productNumbers = localStorage.getItem("cartNumbers");
   productNumbers = parseInt(productNumbers);
@@ -189,20 +182,26 @@ function cartNumbers(product) {
   }
   setItems(product);
 }
+
 function setItems(product) {
   let cartItems = localStorage.getItem("productInCart");
+
   cartItems = JSON.parse(cartItems);
-  if (cartItems != null) {
-    if (cartItems[product.title] == undefined) {
-      cartItems = { ...cartItems, [product.title]: product };
+
+  for (let i = 0; i < bookList.length; i++) {
+    if (cartItems != null) {
+      if (cartItems[product.title] == undefined && bookList) {
+        cartItems = { ...cartItems, [product.title]: product };
+      }
+      cartItems[product.title].inCart += 1;
+    } else {
+      product.inCart = 1;
+      cartItems = {
+        [product.title]: product,
+      };
     }
-    cartItems[product.title].inCart += 1;
-  } else {
-    product.inCart = 1;
-    cartItems = {
-      [product.title]: product,
-    };
   }
+
   localStorage.setItem("productInCart", JSON.stringify(cartItems));
 }
 function totalCost(book) {
@@ -214,27 +213,8 @@ function totalCost(book) {
     localStorage.setItem("totalCost", book.price);
   }
 }
-function displayCart() {
-  let cartItems = localStorage.getItem("productInCart");
-  cartItems = JSON.parse(cartItems);
-  console.log(Object.values(cartItems ));
-  let productContainer = document.querySelectorAll(".books")
 
-  if (cartItems && productContainer) {
-    productContainer.innerHTML = ""
-    Object.values(cartItems).map(item=>{
-      productContainer.innerHTML+=`
-      <div class="book">
-    <ion-icon name="close-circle-outline"></ion-icon>
-    <img src="assets/images/Product images/ark.jpg" alt="" >
-    <span>${item.title}</span>
-</div>
-      `
-    })
-  }
-
+function name(params) {
+  
 }
-onloadCartNumbers();
-displayCart();
-// let productContainer = document.querySelector(".books");
-// console.log(productContainer);
+displayCatalog();
