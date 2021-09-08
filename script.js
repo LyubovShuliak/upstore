@@ -232,8 +232,7 @@ function displayCart() {
       `
     })
   }
-  const prevContent = cardList.innerHTML;
-  cardList.innerHTML = prevContent + card;
+
 }
 onloadCartNumbers();
 displayCart();
