@@ -10,7 +10,8 @@ function showSearchBar() {
 
 function makeCardItem(book) {
   const cardList = document.querySelector(".card-list");
-  const card = ` 
+  if (cardList) {
+     card = ` 
   <div class="row">
     <div class="col s12 m6 ">
       <div class="card">
@@ -27,9 +28,9 @@ function makeCardItem(book) {
     </div>
   </div>
            
-
+  
     `;
-    
+  }
 
   const prevContent = cardList.innerHTML;
   cardList.innerHTML = prevContent + card;
@@ -160,3 +161,81 @@ const button = document.getElementsByTagName("button");
 console.log(button[0]);
 console.log(cart);
 console.log(document.querySelector(".cart"));
+
+let carts = document.querySelectorAll(".buy");
+
+for (let i = 0; i < carts.length; i++) {
+  carts[i].addEventListener("click", () => {
+    cartNumbers(bookList[i]);
+    totalCost(bookList[i]);
+  });
+}
+
+function onloadCartNumbers() {
+  let productNumbers = localStorage.getItem("cartNumbers");
+  if (productNumbers) {
+    document.querySelector(".cart span").textContent = productNumbers;
+  }
+}
+function cartNumbers(product) {
+  let productNumbers = localStorage.getItem("cartNumbers");
+  productNumbers = parseInt(productNumbers);
+  if (productNumbers) {
+    localStorage.setItem("cartNumbers", productNumbers + 1);
+    document.querySelector(".cart span").textContent = productNumbers + 1;
+  } else {
+    localStorage.setItem("cartNumbers", 1);
+    document.querySelector(".cart span").textContent = 1;
+  }
+  setItems(product);
+}
+function setItems(product) {
+  let cartItems = localStorage.getItem("productInCart");
+  cartItems = JSON.parse(cartItems);
+  if (cartItems != null) {
+    if (cartItems[product.title] == undefined) {
+      cartItems = { ...cartItems, [product.title]: product };
+    }
+    cartItems[product.title].inCart += 1;
+  } else {
+    product.inCart = 1;
+    cartItems = {
+      [product.title]: product,
+    };
+  }
+  localStorage.setItem("productInCart", JSON.stringify(cartItems));
+}
+function totalCost(book) {
+  let cartCost = localStorage.getItem("totalCost");
+  if (cartCost != null) {
+    cartCost = parseInt(cartCost);
+    localStorage.setItem("totalCost", cartCost + book.price);
+  } else {
+    localStorage.setItem("totalCost", book.price);
+  }
+}
+function displayCart() {
+  let cartItems = localStorage.getItem("productInCart");
+  cartItems = JSON.parse(cartItems);
+  console.log(Object.values(cartItems ));
+  let productContainer = document.querySelectorAll(".books")
+
+  if (cartItems && productContainer) {
+    productContainer.innerHTML = ""
+    Object.values(cartItems).map(item=>{
+      productContainer.innerHTML+=`
+      <div class="book">
+    <ion-icon name="close-circle-outline"></ion-icon>
+    <img src="assets/images/Product images/ark.jpg" alt="" >
+    <span>${item.title}</span>
+</div>
+      `
+    })
+  }
+  const prevContent = cardList.innerHTML;
+  cardList.innerHTML = prevContent + card;
+}
+onloadCartNumbers();
+displayCart();
+// let productContainer = document.querySelector(".books");
+// console.log(productContainer);
