@@ -8,7 +8,7 @@ function showSearchBar() {
   document.querySelector(".text").classList.toggle("show");
 }
 
-let bookList = [
+let oldBookList = [
   {
     image: "./assets/images/Product images/ark.jpg",
     title: "Тріумфальна арка",
@@ -16,6 +16,7 @@ let bookList = [
     price: 100,
     quantity: 0,
     inCart: 0,
+    id: 1,
   },
   {
     image: "./assets/images/Product images/cafe.jpg",
@@ -24,6 +25,7 @@ let bookList = [
     price: 269,
     quantity: 10,
     inCart: 0,
+    id: 2,
   },
   {
     image: "./assets/images/Product images/city.jpg",
@@ -32,6 +34,7 @@ let bookList = [
     price: 178,
     quantity: 3,
     inCart: 0,
+    id: 3,
   },
   {
     image: "./assets/images/Product images/gal.jpg",
@@ -40,6 +43,7 @@ let bookList = [
     price: 118,
     quantity: 2,
     inCart: 0,
+    id: 4,
   },
   {
     image: "./assets/images/Product images/god.jpg",
@@ -48,6 +52,7 @@ let bookList = [
     price: 400,
     quantity: 6,
     inCart: 0,
+    id: 5,
   },
   {
     image: "./assets/images/Product images/head.jpg",
@@ -56,6 +61,7 @@ let bookList = [
     price: 279,
     quantity: 3,
     inCart: 0,
+    id: 6,
   },
   {
     image: "./assets/images/Product images/master.jpg",
@@ -64,6 +70,7 @@ let bookList = [
     price: 157,
     quantity: 9,
     inCart: 0,
+    id: 7,
   },
   {
     image: "./assets/images/Product images/one.jpg",
@@ -72,6 +79,7 @@ let bookList = [
     price: 240,
     quantity: 9,
     inCart: 0,
+    id: 8,
   },
   {
     image: "./assets/images/Product images/parfumer.jpg",
@@ -80,6 +88,7 @@ let bookList = [
     price: 170,
     quantity: 9,
     inCart: 0,
+    id: 9,
   },
   {
     image: "./assets/images/Product images/patient.jpg",
@@ -88,6 +97,7 @@ let bookList = [
     price: 160,
     quantity: 20,
     inCart: 0,
+    id: 10,
   },
   {
     image: "./assets/images/Product images/people.jpg",
@@ -96,6 +106,7 @@ let bookList = [
     price: 65,
     quantity: 11,
     inCart: 0,
+    id: 11,
   },
   {
     image: "./assets/images/Product images/Tiffani.jpg",
@@ -104,6 +115,7 @@ let bookList = [
     price: 128,
     quantity: 9,
     inCart: 0,
+    id: 12,
   },
   {
     image: "./assets/images/Product images/trans.jpg",
@@ -113,6 +125,7 @@ let bookList = [
 
     quantity: 9,
     inCart: 0,
+    id: 13,
   },
   {
     image: "./assets/images/Product images/wait.png",
@@ -121,50 +134,111 @@ let bookList = [
     price: 170,
     quantity: 15,
     inCart: 0,
+    id: 14,
   },
 ];
 
-function displayCatalog() {
-  let books = document.querySelector(".card-list");
 
-  if (books) {
-    bookList.map((book) => {
-      makeCardItem(book);
-    });
+let cartItems = localStorage.getItem("bookInCart");
+const parseCartItems = JSON.parse(cartItems) || []
+
+const bookList = oldBookList.map(item => {
+  const existInStorage = parseCartItems.find(elem => elem.id === item.id)
+
+  if (existInStorage) return existInStorage
+  
+  return item
+})
+
+function displayCatalog() {
+  const cardList = document.querySelector(".card-list");
+
+  for(const book of bookList) {
+    (async () => {
+      await makeCardItem(book);
+
+      const buyBtn = cardList.querySelector(`a[data-book-buy="${book.id}"]`)
+      const quantityP = cardList.querySelector(`p[data-book-id="${book.id}"]`)
+
+      buyBtn.addEventListener('click', (e) => {
+        let cartItems = localStorage.getItem("bookInCart");
+        // console.log('cartItems: ', cartItems)
+
+        cartItems = JSON.parse(cartItems);
+
+        if (!cartItems) {
+          localStorage.setItem("bookInCart", JSON.stringify([{
+            ...book,
+            quantity: book.quantity - 1
+          }]));
+
+          quantityP.innerHTML = `Доступно ${book.quantity - 1} примірників`
+        } else {
+          let newLocalStorage = null
+
+          if (cartItems.find(item => item.id === book.id)) {
+            newLocalStorage = cartItems.map(item => {
+              if (item.id === book.id) {
+                quantityP.innerHTML = `Доступно ${item.quantity - 1} примірників`
+                return { ...book, quantity: item.quantity - 1}
+              }
+              return item
+            })
+  
+          } else {
+            console.log('ELE: ', )
+            quantityP.innerHTML = `Доступно ${book.quantity - 1} примірників`
+            newLocalStorage = [...cartItems, {...book, quantity: book.quantity - 1}]
+          }
+
+     
+
+          localStorage.setItem('bookInCart', JSON.stringify(newLocalStorage))
+
+
+        }
+        // console.log('quantityP: ', quantityP)
+        
+        
+      })
+      
+      // console.log('cardList.querySelector(`a[data-book-buy="${book.id}"]`): ', cardList.querySelector(`a[data-book-buy="${book.id}"]`))
+
+    })()
+
   }
-  let carts = document.querySelectorAll(".buy");
-  for (let i = 0; i < carts.length; i++) {
-    carts[i].addEventListener("click", () => {
-      cartNumbers(bookList[i]);
-      totalCost(bookList[i]);
-    });
-  }
+  
+  // let carts = document.querySelectorAll(".buy");
+
+  // for (let i = 0; i < carts.length; i++) {
+  //   carts[i].addEventListener("click", () => {
+  //     cartNumbers(bookList[i]);
+  //     totalCost(bookList[i]);
+  //   });
+  // }
 }
 
 function makeCardItem(book) {
   const cardList = document.querySelector(".card-list");
   if (cardList) {
     card = ` 
-  <div class="row">
-    <div class="col s12 m6 ">
-      <div class="card">
-        <div class="card-image">
-          <img src="${book.image}">
-          <a class="btn-floating halfway-fab waves-effect waves-light red buy"><i class="material-icons">Buy</i></a>
-        </div>
-        <div class="card-content">
-          <p>${book.title}</p>
-          <p>&#8372;${book.price}.00</p>
-          <p class = "quantity">Доступно ${book.quantity} примірників</p>
+      <div class="row">
+        <div class="col s12 m6 ">
+          <div class="card">
+            <div class="card-image">
+              <img src="${book.image}">
+              <a data-book-buy="${book.id}" class="btn-floating halfway-fab waves-effect waves-light red buy"><i class="material-icons">Buy</i></a>
+            </div>
+            <div class="card-content">
+              <p>${book.title}</p>
+              <p>&#8372;${book.price}.00</p>
+              <p data-book-id="${book.id}" class="quantity">Доступно ${book.quantity} примірників</p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-           
-  
     `;
   }
-  console.log(book.quantity);
 
   const prevContent = cardList.innerHTML;
   cardList.innerHTML = prevContent + card;
@@ -204,6 +278,7 @@ function setItems(product) {
 
   localStorage.setItem("productInCart", JSON.stringify(cartItems));
 }
+
 function totalCost(book) {
   let cartCost = localStorage.getItem("totalCost");
   if (cartCost != null) {
@@ -217,4 +292,5 @@ function totalCost(book) {
 function name(params) {
   
 }
+
 displayCatalog();
