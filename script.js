@@ -150,6 +150,8 @@ const bookList = oldBookList.map(item => {
   return item
 })
 
+countBookInCart(bookList)
+
 function displayCatalog() {
   const cardList = document.querySelector(".card-list");
 
@@ -160,52 +162,50 @@ function displayCatalog() {
       const buyBtn = cardList.querySelector(`a[data-book-buy="${book.id}"]`)
       const quantityP = cardList.querySelector(`p[data-book-id="${book.id}"]`)
 
+      let quantity = null
+      let inCart = null
+      let newLocalStorage = null
+      
+
       buyBtn.addEventListener('click', (e) => {
         let cartItems = localStorage.getItem("bookInCart");
-        // console.log('cartItems: ', cartItems)
-
         cartItems = JSON.parse(cartItems);
 
         if (!cartItems) {
-          localStorage.setItem("bookInCart", JSON.stringify([{
+          quantity = book.quantity - 1
+          inCart = book.inCart + 1
+
+          newLocalStorage = [{
             ...book,
-            quantity: book.quantity - 1
-          }]));
+            quantity: quantity,
+            inCart: inCart,
+          }]
 
-          quantityP.innerHTML = `Доступно ${book.quantity - 1} примірників`
         } else {
-          let newLocalStorage = null
+          const bookExistInCart = cartItems.find(item => item.id === book.id)
+          if (bookExistInCart) {
+            quantity = bookExistInCart.quantity - 1
+            inCart = bookExistInCart.inCart + 1
 
-          if (cartItems.find(item => item.id === book.id)) {
-            newLocalStorage = cartItems.map(item => {
-              if (item.id === book.id) {
-                quantityP.innerHTML = `Доступно ${item.quantity - 1} примірників`
-                return { ...book, quantity: item.quantity - 1}
+            newLocalStorage = cartItems.map(storageBook => {
+              if (storageBook.id === bookExistInCart.id) {
+                return { ...bookExistInCart, quantity: quantity, inCart: inCart}
               }
-              return item
+              return storageBook
             })
-  
           } else {
-            console.log('ELE: ', )
-            quantityP.innerHTML = `Доступно ${book.quantity - 1} примірників`
-            newLocalStorage = [...cartItems, {...book, quantity: book.quantity - 1}]
+            quantity = book.quantity - 1
+            inCart = book.inCart + 1
+
+            newLocalStorage = [...cartItems, {...book, quantity, inCart: inCart}]
           }
-
-     
-
-          localStorage.setItem('bookInCart', JSON.stringify(newLocalStorage))
-
-
         }
-        // console.log('quantityP: ', quantityP)
-        
-        
+
+        localStorage.setItem('bookInCart', JSON.stringify(newLocalStorage))
+        quantityP.innerHTML = `Доступно ${quantity} примірників`
+        countBookInCart(newLocalStorage)
       })
-      
-      // console.log('cardList.querySelector(`a[data-book-buy="${book.id}"]`): ', cardList.querySelector(`a[data-book-buy="${book.id}"]`))
-
     })()
-
   }
   
   // let carts = document.querySelectorAll(".buy");
@@ -216,6 +216,14 @@ function displayCatalog() {
   //     totalCost(bookList[i]);
   //   });
   // }
+}
+
+function countBookInCart(list) {
+  const sumInCart = list.reduce( (acc, currentValue) => {
+    return acc + currentValue.inCart
+  },0)
+
+  document.querySelector('.amount-in-cart').innerHTML = sumInCart
 }
 
 function makeCardItem(book) {
