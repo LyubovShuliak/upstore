@@ -1,80 +1,198 @@
-img {
-  position: absolute;
-  width: 1120px;
-  height: 702px;
-  left: 160px;
-  top: 116px;
-
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+:root {
+    --blue: #59bab7;
+    --grey: #f3efe0;
+    --border_color: rgb(242, 239, 224);
+    --black: rgb(34, 34, 34);
+    --blue2: rgb(34, 163, 159);
+    --footer: rgb(67, 66, 66);
+    --contacts: rgb(180, 179, 179);
 }
 
-.bg {
-  position: absolute;
-  width: 1440px;
-  height: 116px;
-  left: 0px;
-  top: 0px;
-
-  background: #ffffff;
+@font-face {
+    font-family: "Montserrat";
+    src: url("/assets/Fonts/MontserratAlternates-Bold.ttf") format("truetype");
 }
 
-.bg p {
-  position: absolute;
-  width: 128px;
-  height: 29px;
-  left: 163px;
-  top: 44px;
-
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 29px;
-
-  color: #1c2a39;
-}
-.menu{
+h1 {
+    font-family: "Montserrat";
+    transform: translateX(60px);
+    margin: 0;
+    width: 8ch;
     position: absolute;
-    width: 372px;
-    height: 12px;
-    left: 534px;
-   
-     
 }
 
-.menu:nth-child(1){
-    position: absolute;
-width: 39px;
-height: 12px;
-left: 534px;
-
-
-font-family: Montserrat;
-font-style: normal;
-font-weight: 900;
-font-size: 10px;
-line-height: 12px;
-text-transform: uppercase;
-
-
-
-color: #1C2A39;
+body {
+    margin: 0;
 }
-.menu:not(:nth-of-type(1)){
+
+@media screen and (max-width: 768px) {
+    .card-list {
+        transform: translateY(50px);
+    }
+    /* .card img {
+        height: 200px;
+    }
+    .card {
+        width: 100vw;
+    } */
+    h1 {
+        display: none;
+    }
+    body {
+        margin: 0;
+    }
+    .hamburger {
+        position: fixed;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        width: calc(100%-50px);
+        height: 40px;
+        background-color: var(--black);
+        display: flex;
+        justify-content: right;
+    }
+    label {
+        display: flex;
+        flex-direction: column;
+        width: 40px;
+        cursor: pointer;
+        padding: 5px 5px 5px 5px;
+        align-items: center;
+    }
+    .line {
+        background: var(--grey);
+        height: 2px;
+        margin: 4px 0;
+        width: 70%;
+        transition: 0.4s ease-in-out;
+    }
+    
+    input[type="checkbox"] {
+        display: none;
+    }
+    input[type="checkbox"]:checked ~ .line:nth-of-type(1) {
+        transform-origin: bottom;
+        transform: rotateZ(45deg) translate(6px, 7px);
+        transition: 0.4s ease-in-out;
+        margin-left: 0;
+    }
+    input[type="checkbox"]:checked ~ .line:nth-of-type(2) {
+        transform-origin: top;
+        transform: rotateZ(-45deg) translate(-1px, -1px);
+        transition: 0.4s ease-in-out;
+        margin-left: 0;
+    }
+    input[type="checkbox"]:checked ~ .line:nth-of-type(3) {
+        opacity: 0;
+    }
+    .menu {
+        position: fixed;
+        overflow: hidden;
+        top: 0;
+        right: 0;
+        display: flex;
+        margin: 0;
+        flex-direction: row;
+        margin-left: 40px;
+        height: 40px;
+        justify-content: right;
+        opacity: 0;
+        width: calc(100% - 50px);
+    }
+    input[type="checkbox"]:checked ~ .menu {
+        top: 40px;
+        flex-direction: column;
+        flex-wrap: wrap;
+        height: 160px;
+        opacity: 1;
+        width: 100%;
+    }
+    .hamburger:focus {
+        opacity: 0;
+    }
+    .menu div {
+        display: flex;
+        height: 40px;
+        gap: 2px;
+        background-color: var(--black);
+        text-transform: uppercase;
+        font-size: 12px;
+        text-align: center;
+        justify-content: space-around;
+        color: white;
+        width: 100%;
+    }
+    .hamburger {
+        z-index: 200;
+    }
+    .menu div a {
+        display: block;
+        text-decoration: none;
+        width: 100%;
+        height: 100%;
+        line-height: 40px;
+        color: white;
+    }
+    .menu div:hover > a {
+        color: var(--blue);
+    }
+    .menu div:hover {
+        transform: translate(2px, -2px);
+        box-shadow: -2px 2px 2px 2px var(--blue);
+    }
+}
+
+@media screen and (max-width: 425px) {
+}
+
+.menu_block {
+    width: 100vw;
+    height: 40px;
     position: absolute;
-width: 74px;
-height: 12px;
-left: 613px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
 
+.cart {
+    height: 100%;
+    background-color: aqua;
+}
 
-font-family: Montserrat;
-font-style: normal;
-font-weight: bold;
-font-size: 10px;
-line-height: 12px;
-text-transform: uppercase;
+.cart img {
+    height: 100%;
+}
 
+.text {
+    z-index: 600;
+    display: none;
+}
 
-color: #5C6A79;
+.search_icon {
+    z-index: 600;
+}
 
+.show {
+    display: block;
+}
+
+.available {
+    display: block;
+}
+
+.buy{
+    height: 60px;
+    width: 60px;
+    display: flex;
+   align-content: center;
+  
+}
+.btn-floating i{
+    line-height: 60px;
+    text-align: center;
+}
+
+.card-image img{
+    object-fit: contain;
 }
