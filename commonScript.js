@@ -4,5 +4,4 @@ function onloadCartNumbers() {
       document.querySelector(".cart span").textContent = productNumbers;
     }
   }
-  
   onloadCartNumbers()

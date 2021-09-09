@@ -237,3 +237,12 @@ body {
     display: flex;
     align-items: center;
 }
+.disabled{
+    display: none;
+}
+.sort{
+    width: 60px;
+    height: 30px;
+    background-color: aqua;
+    margin-top: 90px;
+}

@@ -1,21 +1,12 @@
-const search_icon = document.querySelector(".search_icon");
-
-search_icon.onclick = function () {
-  showSearchBar();
-};
-
-function showSearchBar() {
-  document.querySelector(".text").classList.toggle("show");
-}
-
-let bookList = [
+ export const bookList = [
   {
     image: "./assets/images/Product images/ark.jpg",
     title: "Тріумфальна арка",
     author: "Еріх Марія Ремарк",
     price: 100,
-    quantity: 0,
+    quantity: 90,
     inCart: 0,
+    id: 1,
   },
   {
     image: "./assets/images/Product images/cafe.jpg",
@@ -24,6 +15,7 @@ let bookList = [
     price: 269,
     quantity: 10,
     inCart: 0,
+    id: 2,
   },
   {
     image: "./assets/images/Product images/city.jpg",
@@ -32,6 +24,7 @@ let bookList = [
     price: 178,
     quantity: 3,
     inCart: 0,
+    id: 3,
   },
   {
     image: "./assets/images/Product images/gal.jpg",
@@ -40,6 +33,7 @@ let bookList = [
     price: 118,
     quantity: 2,
     inCart: 0,
+    id: 4,
   },
   {
     image: "./assets/images/Product images/god.jpg",
@@ -48,6 +42,7 @@ let bookList = [
     price: 400,
     quantity: 6,
     inCart: 0,
+    id: 5,
   },
   {
     image: "./assets/images/Product images/head.jpg",
@@ -56,6 +51,7 @@ let bookList = [
     price: 279,
     quantity: 3,
     inCart: 0,
+    id: 6,
   },
   {
     image: "./assets/images/Product images/master.jpg",
@@ -64,6 +60,7 @@ let bookList = [
     price: 157,
     quantity: 9,
     inCart: 0,
+    id: 7,
   },
   {
     image: "./assets/images/Product images/one.jpg",
@@ -72,6 +69,7 @@ let bookList = [
     price: 240,
     quantity: 9,
     inCart: 0,
+    id: 8,
   },
   {
     image: "./assets/images/Product images/parfumer.jpg",
@@ -80,6 +78,7 @@ let bookList = [
     price: 170,
     quantity: 9,
     inCart: 0,
+    id: 9,
   },
   {
     image: "./assets/images/Product images/patient.jpg",
@@ -88,6 +87,7 @@ let bookList = [
     price: 160,
     quantity: 20,
     inCart: 0,
+    id: 10,
   },
   {
     image: "./assets/images/Product images/people.jpg",
@@ -96,6 +96,7 @@ let bookList = [
     price: 65,
     quantity: 11,
     inCart: 0,
+    id: 11,
   },
   {
     image: "./assets/images/Product images/Tiffani.jpg",
@@ -104,6 +105,7 @@ let bookList = [
     price: 128,
     quantity: 9,
     inCart: 0,
+    id: 12,
   },
   {
     image: "./assets/images/Product images/trans.jpg",
@@ -113,6 +115,7 @@ let bookList = [
 
     quantity: 9,
     inCart: 0,
+    id: 13,
   },
   {
     image: "./assets/images/Product images/wait.png",
@@ -121,100 +124,7 @@ let bookList = [
     price: 170,
     quantity: 15,
     inCart: 0,
+    id: 14,
   },
 ];
 
-function displayCatalog() {
-  let books = document.querySelector(".card-list");
-
-  if (books) {
-    bookList.map((book) => {
-      makeCardItem(book);
-    });
-  }
-  let carts = document.querySelectorAll(".buy");
-  for (let i = 0; i < carts.length; i++) {
-    carts[i].addEventListener("click", () => {
-      cartNumbers(bookList[i]);
-      totalCost(bookList[i]);
-    });
-  }
-}
-
-function makeCardItem(book) {
-  const cardList = document.querySelector(".card-list");
-  if (cardList) {
-    card = ` 
-  <div class="row">
-    <div class="col s12 m6 ">
-      <div class="card">
-        <div class="card-image">
-          <img src="${book.image}">
-          <a class="btn-floating halfway-fab waves-effect waves-light red buy"><i class="material-icons">Buy</i></a>
-        </div>
-        <div class="card-content">
-          <p>${book.title}</p>
-          <p>&#8372;${book.price}.00</p>
-          <p class = "quantity">Доступно ${book.quantity} примірників</p>
-        </div>
-      </div>
-    </div>
-  </div>
-           
-  
-    `;
-  }
-  console.log(book.quantity);
-
-  const prevContent = cardList.innerHTML;
-  cardList.innerHTML = prevContent + card;
-}
-
-function cartNumbers(product) {
-  let productNumbers = localStorage.getItem("cartNumbers");
-  productNumbers = parseInt(productNumbers);
-  if (productNumbers) {
-    localStorage.setItem("cartNumbers", productNumbers + 1);
-    document.querySelector(".cart span").textContent = productNumbers + 1;
-  } else {
-    localStorage.setItem("cartNumbers", 1);
-    document.querySelector(".cart span").textContent = 1;
-  }
-  setItems(product);
-}
-
-function setItems(product) {
-  let cartItems = localStorage.getItem("productInCart");
-
-  cartItems = JSON.parse(cartItems);
-
-  for (let i = 0; i < bookList.length; i++) {
-    if (cartItems != null) {
-      if (cartItems[product.title] == undefined && bookList) {
-        cartItems = { ...cartItems, [product.title]: product };
-      }
-      cartItems[product.title].inCart += 1;
-    } else {
-      product.inCart = 1;
-      cartItems = {
-        [product.title]: product,
-      };
-    }
-  }
-
-  localStorage.setItem("productInCart", JSON.stringify(cartItems));
-}
-function totalCost(book) {
-  let cartCost = localStorage.getItem("totalCost");
-  if (cartCost != null) {
-    cartCost = parseInt(cartCost);
-    localStorage.setItem("totalCost", cartCost + book.price);
-  } else {
-    localStorage.setItem("totalCost", book.price);
-  }
-}
-
-function name(params) {
-  
-}
-displayCatalog();
