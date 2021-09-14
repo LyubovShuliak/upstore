@@ -301,9 +301,16 @@ function totalCost(book) {
   let cartCost = localStorage.getItem("totalCost");
   if (cartCost != null) {
     cartCost = parseInt(cartCost);
-    localStorage.setItem("totalCost", cartCost + book.price);
+   if (book.inCart !=0) {
+    localStorage.setItem("totalCost", cartCost + book.price*book.inCart);
+   }else
+   { localStorage.setItem("totalCost", cartCost + book.price);}
   } else {
-    localStorage.setItem("totalCost", book.price);
+    if (book.inCart !=0) {
+      localStorage.setItem("totalCost", cartCost + book.price*book.inCart);
+     }else
+     { localStorage.setItem("totalCost", cartCost + book.price);}
+    
   }
 }
 
@@ -361,8 +368,10 @@ function displayCart() {
         let bookList = createBookList(maped);
         if (filtered.length != 0) {
           localStorage.setItem("bookInCart", JSON.stringify(filtered));
-          for (const book of filtered ) {
           delete  localStorage.totalCost
+          for (const book of filtered ) {
+        //  book.price =   book.price*book.inCart
+        //  console.log(book.price);
             totalCost(book)
             
           }
