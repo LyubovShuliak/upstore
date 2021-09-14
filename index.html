@@ -5,9 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -28,59 +35,143 @@
     <link rel="manifest" href="./assets/favicon/site.webmanifest" />
   </head>
   <body>
-    <h1>Lebenkele</h1>
-      <div class="menu_block">
-        <input type="text" class="text">
-        <img class="search_icon" src="./assets/images/icon_search.png" alt="search" >
-        <div class="cart"><a href="cart.html"><img src="./assets/images/bag-handle.svg" alt=""> <span class="amount-in-cart">0</span></a></div>
-        
+    <nav class="menu_mobile">
+      <div class="nav-wrapper">
+        <a href="#!" class="logo">Lebenkele</a>
+
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"
+          ><i class="material-icons">menu</i></a
+        >
+        <a
+          class="waves-effect waves-light modal-trigger searching"
+          href="#modal1"
+          ><i class="material-icons">search</i></a
+        >
+        <div id="modal1" class="modal">
+          <div class="nav-wrapper">
+            <form>
+              <div class="input-field customise">
+                <input id="search" type="search" class="text_input"  />
+                <label class="label-icon save_input" for="search"
+                  ><i class="material-icons modal-close">search</i></label
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <a
+          class="waves-effect waves-light modal-trigger cart amount-in-cart"
+          href="#modal2"
+          ><span></span>
+          <ion-icon name="bag-handle"></ion-icon>
+        </a>
+
+        <div id="modal2" class="modal">
+          <div class="books centered"></div>
+          <p class="total"></p>
+          <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green close_cart"
+              ><ion-icon name="close-outline"></ion-icon
+            ></a>
+          </div>
+        </div>
+
+        <ul class="left hide-on-med-and-down">
+          <li><a href="sass.html">Sass</a></li>
+          <li><a href="badges.html">Components</a></li>
+          <li class="active"><a href="collapsible.html">JavaScript</a></li>
+        </ul>
       </div>
-      
-      
-      <div class="hamburger">
-        <label for="check">
-            <input type="checkbox" id="check" />
-            <span class="line lever"></span>
-            <span class="line lever"></span>
-            <span class="line lever"></span>
-            
-            <div class="menu">
-              
-                <div><a href="#profile">Books</a> </div>
-                <div><a href="#contacts">Contacts</a></div>
-            </div>
-          
-            
+    </nav>
+    <ul class="sidenav" id="mobile-demo">
+      <li><a href="sass.html">Sass</a></li>
+      <li><a href="badges.html">Components</a></li>
+      <li><a href="collapsible.html">Javascript</a></li>
+    </ul>
+    <div class="nav-wrapper breadcrumbs">
+      <div class="col s12">
+        <a href="#!" class="breadcrumb"><ion-icon name="home"></ion-icon></a>
+        <a href="#!" class="breadcrumb">Catalog</a>
+      </div>
+    </div>
+    <div class="top-bar">
+      <div class="filters">
+        <div class="buttons">
+          <p href="#" class="filter_btn">Filters:</p>
+          <p class="sort">Sort by price:</p>
+          <button id="more">
+            <ion-icon name="trending-down-outline"></ion-icon>
+          </button>
+          <button id="less">
+            <ion-icon name="trending-up-outline"></ion-icon>
+          </button>
+        </div>
+        <p>Language:</p>
+        <label>
+          <input
+            type="checkbox"
+            name="language"
+            class="filled-in"
+            value="english"
+          />
+          <span>English</span>
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="language"
+            class="filled-in"
+            value="ukrainian"
+          />
+          <span>Ukrainian</span>
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="language"
+            class="filled-in"
+            value="swedish"
+          />
+          <span>Swedish</span>
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="language"
+            class="filled-in"
+            value="german"
+          />
+          <span>German</span>
         </label>
       </div>
-  <button class = "sort">Sort by price</button>
-  <!-- <nav>
-    <div class="nav-wrapper">
-      <a href="#!" class="brand-logo">Logo</a>
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="sass.html">Sass</a></li>
-        <li><a href="badges.html">Components</a></li>
-        <li><a href="collapsible.html">Javascript</a></li>
-        <li><a href="mobile.html">Mobile</a></li>
-      </ul>
     </div>
-  </nav>
-  <ul class="sidenav" id="mobile-demo">
-    <li><a href="sass.html">Sass</a></li>
-    <li><a href="badges.html">Components</a></li>
-    <li><a href="collapsible.html">Javascript</a></li>
-    <li><a href="mobile.html">Mobile</a></li>
-  </ul>
-       -->
-  
-  <div class="card-list">
 
-  </div>
-  <script src="commonScript.js"></script>
-  <script type="module" src="catalog.js"></script>
+    <!-- <button class="save">Save</button> -->
 
+    <div id="card-list" class="card-list"></div>
+
+    <div class="pagenumbers" id="pagination"></div>
+
+    <footer class="page-footer">
+      <div class="footer-copyright">
+        <div class="container">© 2021 Copyright</div>
+      </div>
+    </footer>
+
+    <script src="js/commonScript.js"></script>
+    <script type="module" src="js/catalog.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
   </body>
 </html>

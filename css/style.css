@@ -1,0 +1,452 @@
+:root {
+  --blue: #59bab7;
+  --grey: #f3efe0;
+  --border_color: rgb(242, 239, 224);
+  --black: rgb(34, 34, 34);
+  --blue2: rgb(34, 163, 159);
+  --footer: rgb(67, 66, 66);
+  --contacts: rgb(180, 179, 179);
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/assets/Fonts/MontserratAlternates-Bold.ttf") format("truetype");
+}
+
+h1 {
+  font-family: "Montserrat";
+  transform: translateX(60px);
+  margin: 0;
+  width: 8ch;
+  position: absolute;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+@media screen and (min-width: 768px) {
+  #card-list {
+    display: grid;
+    justify-items: center;
+    padding-top: 150px;
+    margin-left: auto;
+    margin-right: 60px;
+    grid-template-columns: 1fr 1fr;
+    align-items: baseline;
+    min-height: 100vh;
+    gap: 20px;
+    width: fit-content;
+    align-self: center;
+  }
+  h1 {
+    display: none;
+  }
+
+  .filter_btn {
+    display: none;
+  }
+  .card {
+    width: 30vw;
+
+
+  }
+  .card-image {
+    height: 20vh;
+
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+  nav .logo {
+    display: none;
+  }
+  .modal-trigger {
+    position: fixed;
+    right: 0;
+  }
+  #card-list {
+    display: grid;
+    top: 300px;
+width: fit-content;
+    justify-items: center;
+    grid-auto-columns: 1fr;
+  }
+
+  .card {
+    width: 400px;
+
+  }
+  .card-image {
+    height: 20vh;
+
+  }
+}
+
+.menu_block {
+  width: 100vw;
+  height: 40px;
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.cart {
+  padding: 0px;
+  max-width: 90px;
+  background-color: transparent;
+  z-index: 800;
+  font-size: 25px;
+  line-height: 45px;
+  position: fixed;
+  right: 20px;
+  top: 15px;
+}
+.cart p {
+  font-size: 15px;
+  color: black;
+  margin: 0;
+}
+.books ion-icon {
+  font-size: 15px;
+  color: black;
+  margin: 0;
+}
+
+.text {
+  z-indx: 600;
+  display: none;
+}
+e .search_icon {
+  z-index: 600;
+}
+
+.show {
+  display: block;
+}
+
+.available {
+  display: block;
+}
+
+.buy {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 15px;
+  right: 0;
+  bottom: 0;
+}
+.btn-floating i {
+  line-height: 60px;
+  text-align: center;
+}
+
+.card-image img {
+  max-height: 300px;
+  object-fit: contain;
+}
+.text {
+  z-index: 100;
+}
+
+/*         ---------------------------------------- CART ------------------------------------------------------------------------*/
+.books_container {
+  max-width: 650px;
+  justify-content: space-around;
+  margin: 0 auto;
+  margin-top: 50px;
+  z-index: 2000;
+}
+.products_header {
+  width: 100%;
+  max-width: 650px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  border-bottom: 4px solid aquamarine;
+  margin: 0 auto;
+}
+.title {
+  width: 45%;
+}
+.price {
+  width: 15%;
+  /* border-bottom: 4px solid aquamarine; */
+  display: flex;
+  align-items: center;
+}
+.quantity {
+  width: 30%;
+  /* border-bottom: 4px solid aquamarine; */
+  display: flex;
+  align-items: center;
+}
+.total {
+color: black;
+}
+.disabled_btn {
+  display: none;
+}
+.sort {
+  width: fit-content;
+  height: 30px;
+  color: black;
+  margin: 0;
+}
+
+.filter_quantity {
+  width: fit-content;
+  height: 30px;
+  background-color: aqua;
+  margin-top: 90px;
+}
+.input-field {
+  height: 30px;
+}
+
+.nav-wrapper form {
+  height: 60px;
+}
+.save_input .material-icons {
+  color: black;
+}
+#search {
+  margin-bottom: 0px;
+}
+.customise {
+  height: 30px;
+}
+.modal2 {
+  overflow: scroll;
+  /* padding-top: 60px;
+  top: 400px; */
+  background-color: yellow;
+}
+table td {
+  color: black;
+}
+table img {
+  height: 60px;
+}
+td:first-of-type {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  margin: 0;
+}
+
+.row img {
+  max-height: 200px;
+}
+.row {
+  max-width: 300px;
+  margin: 0;
+  max-height: 400px;
+}
+td:nth-of-type(4) {
+  font-size: 18px;
+}
+.arrow {
+  color: rgb(85, 216, 151);
+}
+/* .cart span {
+  z-index: 800;
+  height: 100px;
+  width: 100px;
+  background-color: turquoise;
+} */
+.searching {
+  position: fixed;
+  right: 70px;
+}
+.menu_mobile {
+  position: fixed;
+  z-index: 801;
+}
+
+.empty_cart {
+  color: black;
+  text-align: center;
+  font-size: 30px;
+  line-height: 60px;
+  justify-content: center;
+}
+.modal-footer a {
+  font-size: 40px;
+  color: black;
+}
+
+.overflow_overlay {
+  overflow: scroll;
+}
+.overflow_hidden {
+  overflow: hidden;
+}
+
+.inCart ion-icon {
+  font-size: 30px;
+  padding: 0;
+}
+
+.row .col.m6 {
+  width: 100%;
+}
+.card-content .quantity {
+  margin: 0px;
+  width: 140px;
+}
+.sidenav-trigger {
+  width: 120px;
+}
+
+.filter {
+  background-color: black;
+  color: #f3efe0;
+  font-size: 22px;
+}
+
+.title {
+  font-weight: bold;
+  color: chocolate;
+}
+.btn-annotation {
+  background-color: transparent;
+  color: var(--blue);
+  background-color: transparent;
+  box-shadow: 0 0px 0px 0 rgb(0 0 0 / 14%), 0 0px 0px 0 rgb(0 0 0 / 12%),
+    0 0px 0px 0px rgb(0 0 0 / 20%);
+}
+.card-content {
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  height: 100vh;
+  width: 300px;
+  z-index: 1200;
+}
+
+.filters label,
+p {
+  margin-left: 20px;
+}
+.filters label ion-icon {
+  color: rgb(245, 245, 4);
+}
+
+.top-bar {
+  position: fixed;
+  top: 120px;
+  color: black;
+}
+
+.breadcrumbs {
+  width: fit-content;
+
+  position: fixed;
+  height: 50px;
+  top: 64px;
+  color: black;
+ 
+}
+.breadcrumb {
+  line-height: 40px;
+  text-align: center;
+  color: black;
+}
+
+.breadcrumb:last-child {
+  color: rgb(214, 84, 84);
+}
+.breadcrumb::before {
+  color: #59bab7;
+}
+.buttons {
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  gap: 30px;
+}
+.buttons button {
+  height: 30px;
+}
+.filter_btn {
+  margin: 0;
+  width: 200px;
+  text-align: center;
+  font-size: 24px;
+  border: 1px solid black;
+  border-radius: 57px 51px 51px 57px / 45px 45px 45px 45px;
+}
+
+#pagination {
+  margin-left: 300px;
+  z-index: 2000;
+}
+
+#modal2 {
+  overflow: scroll;
+  top: 20%;
+}
+
+.pagenumbers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagenumbers button {
+  width: 30px;
+  height: 30px;
+
+  appearance: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  background-color: #ffebee;
+
+  margin: 5px;
+  transition: 0.4s;
+
+  color: #fff;
+  font-size: 18px;
+  text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+}
+
+.pagenumbers button:hover {
+  background-color: #ffcdd2;
+}
+
+.pagenumbers button.active {
+  background-color: #ff5252;
+  box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.2);
+}
+.books {
+  color: black;
+  background-color: #ff5252;
+}
+.cartItem {
+  width: 100%;
+}
+
+.carts {
+  height: 100px;
+  width: 500px;
+}
+.horizontal {
+  width: 100%;
+}
