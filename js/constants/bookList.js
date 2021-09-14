@@ -41,8 +41,10 @@ export const bookList = [
     annotation: "",
     language: "english",
     author: "Richard David Bach",
+    
     price: 118,
     quantity: 2,
+
     inCart: 0,
     ratings: 6,
     id: 4,
