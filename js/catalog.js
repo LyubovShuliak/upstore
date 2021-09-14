@@ -133,11 +133,18 @@ sortLess.addEventListener("click", () => {
 saveBtn.addEventListener("click", () => {
   let inputVal = document.querySelector(".text_input").value;
   let carrent = cardList.children
-  console.log(carrent);
+
   if (!inputVal) {
     cardList.appendChild(carrent)
+    
   } else {
     let current_page = 1
+    let searchResults = document.querySelector(".bread")
+    let search =document.createElement("A")
+    search.classList.add("breadcrumb")
+    search.innerHTML = "Search results"
+    searchResults.appendChild(search)
+  
     let bookList_filtered = bookList.filter((book) => {
       if (book.author.includes(inputVal)) {
         return true;
@@ -153,6 +160,12 @@ saveBtn.addEventListener("click", () => {
 });
 let breadcrumbs = document.querySelector(".breadcrumbs")
 breadcrumbs.addEventListener("click", ()=>{
+  let bread = document.querySelector(".bread")
+  let breads = bread.querySelectorAll(".breadcrumb")
+  if (breads[2] != undefined) {
+    breads[2].remove()
+  }
+ 
   displayCatalog(bookList, current_page);
   SetupPagination(bookList, pagination_elements);
 })
@@ -343,11 +356,18 @@ function displayCart() {
             return item;
           }
         });
-
+        
         const filtered = maped.filter((item) => item.id != cart.id);
         let bookList = createBookList(maped);
         if (filtered.length != 0) {
           localStorage.setItem("bookInCart", JSON.stringify(filtered));
+          for (const book of filtered ) {
+          delete  localStorage.totalCost
+            totalCost(book)
+            
+          }
+        total.innerHTML = "";
+        total.innerHTML = ` Total sum: &#8372;${cartCost}.00`;
 
           countBookInCart(filtered);
           displayCart();
@@ -361,6 +381,8 @@ function displayCart() {
           localStorage.removeItem("bookInCart");
           localStorage.removeItem("totalCost");
           localStorage.removeItem("cartNumbers");
+          total.innerHTML = "";
+         
           displayCatalog(bookList, current_page);
           SetupPagination(bookList, pagination_elements);
         }
